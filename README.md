@@ -1,3 +1,9 @@
+New example programs added in this branch:
+
+- `file_io_examples.c` — shows basic file write/read using fopen/fgets/fprintf.
+- `dynamic_array.c` — simple vector-like dynamic array with push and resizing.
+- `linked_list_example.c` — singly linked list with insert, delete, and print.
+- `bst_example.c` — binary search tree insert + inorder traversal.
 C Language Programs — Hacktoberfest 2025 🎯🐍
 
 Hi — I’m Dimpesh Panwar 👋
@@ -62,6 +68,20 @@ Contribution quick-start
 - If your program uses advanced features, briefly explain them at the top.
 
 Ideas to contribute
+
+- Classic algorithms (sorting, searching)
+- Number theory (GCD, prime checks)
+- Data structures (linked list, stack, queue)
+- Small games (tic-tac-toe CLI)
+- Problem-solving examples (recursion, DP basics)
+- Useful utilities (file I/O examples)
+
+New example programs added in this branch:
+
+- `file_io_examples.c` — shows basic file write/read using fopen/fgets/fprintf.
+- `dynamic_array.c` — simple vector-like dynamic array with push and resizing.
+- `linked_list_example.c` — singly linked list with insert, delete, and print.
+- `bst_example.c` — binary search tree insert + inorder traversal.
 
 - Classic algorithms (sorting, searching)
 
