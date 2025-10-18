@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+int main() {
+    int choice;
+    double temp, converted;
+
+    printf("Temperature Converter:\n");
+    printf("1. Celsius to Fahrenheit\n");
+    printf("2. Fahrenheit to Celsius\n");
+    printf("3. Celsius to Kelvin\n");
+    printf("4. Kelvin to Celsius\n");
+    printf("5. Fahrenheit to Kelvin\n");
+    printf("6. Kelvin to Fahrenheit\n");
+    printf("Enter your choice (1-6): ");
+    scanf("%d", &choice);
+
+    printf("Enter temperature value: ");
+    scanf("%lf", &temp);
+
+    switch(choice) {
+        case 1: converted = (temp * 9/5) + 32;
+                printf("%.2lf Celsius = %.2lf Fahrenheit\n", temp, converted);
+                break;
+        case 2: converted = (temp - 32) * 5/9;
+                printf("%.2lf Fahrenheit = %.2lf Celsius\n", temp, converted);
+                break;
+        case 3: converted = temp + 273.15;
+                printf("%.2lf Celsius = %.2lf Kelvin\n", temp, converted);
+                break;
+        case 4: converted = temp - 273.15;
+                printf("%.2lf Kelvin = %.2lf Celsius\n", temp, converted);
+                break;
+        case 5: converted = (temp - 32) * 5/9 + 273.15;
+                printf("%.2lf Fahrenheit = %.2lf Kelvin\n", temp, converted);
+                break;
+        case 6: converted = (temp - 273.15) * 9/5 + 32;
+                printf("%.2lf Kelvin = %.2lf Fahrenheit\n", temp, converted);
+                break;
+        default: printf("Invalid choice!\n");
+    }
+
+    return 0;
+}

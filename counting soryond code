@@ -1,0 +1,34 @@
+import java.util.*;
+
+public class CountingSortMap {
+    public static void countingSort(int[] arr) {
+        Map<Integer, Integer> map = new HashMap<>();
+
+        // Count frequency of each element
+        for (int num : arr)
+            map.put(num, map.getOrDefault(num, 0) + 1);
+
+        // Sort the keys and rewrite array
+        List<Integer> keys = new ArrayList<>(map.keySet());
+        Collections.sort(keys);
+
+        int index = 0;
+        for (int key : keys) {
+            int count = map.get(key);
+            while (count-- > 0)
+                arr[index++] = key;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {5, -2, 8, 5, 1, 0, -3};
+
+        System.out.println("Original array:");
+        System.out.println(Arrays.toString(arr));
+
+        countingSort(arr);
+
+        System.out.println("Sorted array:");
+        System.out.println(Arrays.toString(arr));
+    }
+}
