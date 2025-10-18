@@ -1,0 +1,117 @@
+/*Program to find the kth smallest element in a Binary Search Tree (BST)
+
+Example 1:
+----------
+Input:
+7
+40 20 60 10 30 50 70
+3
+
+Output:
+Inorder traversal of BST: 10 20 30 40 50 60 70
+
+3-th smallest element is: 30
+
+Example 2:
+----------
+Input:
+5
+15 5 22 1 13
+1
+
+Output:
+Inorder traversal of BST: 1 5 13 15 22
+
+1-th smallest element is: 1
+
+----------------------------------------------------------------------------------
+Time Complexity:
+- Average and best case: O(H + K), where H is the height of the tree, as the program traverses up to K nodes.
+- Worst case: O(N) for completely unbalanced trees (like a skewed tree).
+Space Complexity:
+- O(H), due to recursion stack in inorder traversal, where H is the height of the tree.
+----------------------------------------------------------------------------------
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define the structure for BST Node
+typedef struct node {
+    int data;
+    struct node* left;
+    struct node* right;
+} Node;
+
+// Utility function to create a new node
+Node* createNode(int data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->left = newNode->right = NULL;
+    return newNode;
+}
+
+// Insert a node into BST
+Node* insert(Node* root, int data) {
+    if (root == NULL) {
+        return createNode(data);
+    }
+    if (data < root->data)
+        root->left = insert(root->left, data);
+    else if (data > root->data)
+        root->right = insert(root->right, data);
+    // Ignore duplicates
+    return root;
+}
+
+// Inorder traversal to print BST
+void inorder(Node* root) {
+    if (root != NULL) {
+        inorder(root->left);
+        printf("%d ", root->data);
+        inorder(root->right);
+    }
+}
+
+// Function to find kth smallest element in BST
+void kthSmallestUtil(Node* root, int k, int* count, int* result) {
+    if (root == NULL || *result != -1)
+        return;
+    
+    kthSmallestUtil(root->left, k, count, result);
+    (*count)++;
+    if (*count == k) {
+        *result = root->data;
+        return;
+    }
+    kthSmallestUtil(root->right, k, count, result);
+}
+
+int kthSmallest(Node* root, int k) {
+    int count = 0;
+    int result = -1; // -1 if not found
+    kthSmallestUtil(root, k, &count, &result);
+    return result;
+}
+
+int main() {
+    Node* root = NULL;
+    int n, value, k;
+    printf("Enter number of nodes: ");
+    scanf("%d", &n);
+    printf("Enter %d node values (space separated): ", n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &value);
+        root = insert(root, value);
+    }
+    printf("\nInorder traversal of BST: ");
+    inorder(root);
+    printf("\n\nEnter k for kth smallest element (1 to %d): ", n);
+    scanf("%d", &k);
+    int kth = kthSmallest(root, k);
+    if (kth != -1)
+        printf("%d-th smallest element is: %d\n", k, kth);
+    else
+        printf("Invalid k!\n");
+    return 0;
+}
