@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define V 6
+
+struct Node {
+    int dest;
+    struct Node* next;
+};
+
+struct Graph {
+    struct Node* adj[V];
+};
+
+void addEdge(struct Graph* g, int u, int v) {
+    struct Node* node = (struct Node*)malloc(sizeof(struct Node));
+    node->dest = v;
+    node->next = g->adj[u];
+    g->adj[u] = node;
+}
+
+void topSortUtil(struct Graph* g, int v, int visited[], int stack[], int *index) {
+    visited[v] = 1;
+    struct Node* cur = g->adj[v];
+    while (cur) {
+        if (!visited[cur->dest])
+            topSortUtil(g, cur->dest, visited, stack, index);
+        cur = cur->next;
+    }
+    stack[(*index)--] = v;
+}
+
+void topologicalSort(struct Graph* g) {
+    int visited[V] = {0};
+    int stack[V], idx = V-1;
+    for (int i = 0; i < V; i++)
+        if (!visited[i])
+            topSortUtil(g, i, visited, stack, &idx);
+
+    printf("Topological Order: ");
+    for (int i = 0; i < V; i++)
+        printf("%d ", stack[i]);
+    printf("\n");
+}
+
+int main() {
+    struct Graph graph = {0};
+    addEdge(&graph, 5, 2);
+    addEdge(&graph, 5, 0);
+    addEdge(&graph, 4, 0);
+    addEdge(&graph, 4, 1);
+    addEdge(&graph, 2, 3);
+    addEdge(&graph, 3, 1);
+
+    topologicalSort(&graph);
+
+    return 0;
+}
