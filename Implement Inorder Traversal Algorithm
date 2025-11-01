@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define a structure for binary tree node
+struct Node {
+    int data;
+    struct Node *left, *right;
+};
+
+// Function to create a new node
+struct Node* newNode(int data) {
+    struct Node* node = (struct Node*)malloc(sizeof(struct Node));
+    node->data = data;
+    node->left = node->right = NULL;
+    return node;
+}
+
+// Function to perform Morris Inorder Traversal
+void morrisInorderTraversal(struct Node* root) {
+    struct Node* current = root;
+    struct Node* predecessor;
+
+    printf("Inorder traversal using Morris algorithm:\n");
+
+    while (current != NULL) {
+        if (current->left == NULL) {
+            // No left child — print and move right
+            printf("%d ", current->data);
+            current = current->right;
+        } else {
+            // Find inorder predecessor
+            predecessor = current->left;
+            while (predecessor->right != NULL && predecessor->right != current)
+                predecessor = predecessor->right;
+
+            // Make thread or remove it
+            if (predecessor->right == NULL) {
+                predecessor->right = current;
+                current = current->left;
+            } else {
+                predecessor->right = NULL;
+                printf("%d ", current->data);
+                current = current->right;
+            }
+        }
+    }
+    printf("\n");
+}
+
+// Helper to build a sample binary tree for testing
+// Level order: 1 2 3 4 5
+struct Node* buildSampleTree() {
+    struct Node* root = newNode(1);
+    root->left = newNode(2);
+    root->right = newNode(3);
+    root->left->left = newNode(4);
+    root->left->right = newNode(5);
+    return root;
+}
+
+int main() {
+    struct Node* root = buildSampleTree();
+    morrisInorderTraversal(root);
+    return 0;
+}
