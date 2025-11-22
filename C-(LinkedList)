@@ -1,0 +1,78 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to create a new node
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to remove Nth node
+struct Node* removeNthNode(struct Node* head, int n) {
+    if (head == NULL) return head;
+
+    // If head needs to be removed
+    if (n == 1) {
+        struct Node* temp = head;
+        head = head->next;
+        free(temp);
+        return head;
+    }
+
+    struct Node* temp = head;
+
+    // Traverse to (n-1)th node
+    for (int i = 1; i < n-1 && temp != NULL; i++) {
+        temp = temp->next;
+    }
+
+    // If position out of range
+    if (temp == NULL || temp->next == NULL) {
+        printf("Invalid position!\n");
+        return head;
+    }
+
+    struct Node* del = temp->next;   // node to delete
+    temp->next = temp->next->next;   // unlink
+    free(del);
+
+    return head;
+}
+
+// Function to print list
+void printList(struct Node* head) {
+    while (head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+    head = createNode(10);
+    head->next = createNode(20);
+    head->next->next = createNode(30);
+    head->next->next->next = createNode(40);
+
+    printf("Original List:\n");
+    printList(head);
+
+    int n;
+    printf("Enter position to remove: ");
+    scanf("%d", &n);
+
+    head = removeNthNode(head, n);
+
+    printf("Updated List:\n");
+    printList(head);
+
+    return 0;
+}
