@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <string.h>
+#define MAX 50
+
+struct Student {
+    char name[50];
+    int roll;
+    int marks[5];
+    int total;
+    float percentage;
+};
+
+void calculate(struct Student* s) {
+    s->total = 0;
+    for (int i = 0; i < 5; i++) {
+        s->total += s->marks[i];
+    }
+    s->percentage = s->total / 5.0;
+}
+
+void display(struct Student s) {
+    printf("\n--- Report Card ---\n");
+    printf("Name: %s\n", s.name);
+    printf("Roll Number: %d\n", s.roll);
+    printf("Marks: ");
+    for (int i = 0; i < 5; i++) {
+        printf("%d ", s.marks[i]);
+    }
+    printf("\nTotal: %d\n", s.total);
+    printf("Percentage: %.2f%%\n", s.percentage);
+}
+
+int main() {
+    struct Student s;
+
+    printf("Enter student name: ");
+    fgets(s.name, sizeof(s.name), stdin);
+    s.name[strcspn(s.name, "\n")] = 0; // remove newline
+
+    printf("Enter roll number: ");
+    scanf("%d", &s.roll);
+
+    printf("Enter marks for 5 subjects: ");
+    for (int i = 0; i < 5; i++) {
+        scanf("%d", &s.marks[i]);
+    }
+
+    calculate(&s);
+    display(s);
+
+    return 0;
+}
